@@ -33,21 +33,21 @@ def janelaAdiciona ():
     global descricaoDespesa, valorDespesa
 
     descricaoLabel = Label (adicionarJanela, text = "Digite uma breve descrição da despesa", font = ("Arial", 12))
-    descricaoLabel.grid (row = 0, column = 0, sticky = "nsew", pady = 5)
+    descricaoLabel.grid (row = 0, column = 0, sticky = "w", pady = 5)
 
     descricaoDespesa = Entry (adicionarJanela, font = ("Arial", 11))
     descricaoDespesa.grid (row = 1, column = 0, sticky = "nsew", pady = 5)
 
     valorLabel = Label (adicionarJanela, text = "Digite o valor da despesa", font = ("Arial", 12))
-    valorLabel.grid (row = 2, column = 0, sticky = "nsew", pady = 5)
+    valorLabel.grid (row = 2, column = 0, sticky = "w", pady = 5)
 
     valorDespesa = Entry (adicionarJanela, font = ("Arial", 11))
     valorDespesa.grid (row = 3, column = 0, sticky = "nsew", pady = 5)
 
-    submeterDespesa = Button (adicionarJanela, text = "Adicionar", font = ("Arial", 12), command = adiciona)
+    submeterDespesa = Button (adicionarJanela, text = "Adicionar", font = ("Arial", 12), command = adiciona, bg = "#a7cd2c")
     submeterDespesa.grid (row = 4, column = 0, sticky = "nsew", pady = 0)
 
-    fecharDespesa = Button (adicionarJanela, text = "Fechar", font = ("Arial", 12), command = adicionarJanela.destroy)
+    fecharDespesa = Button (adicionarJanela, text = "Fechar", font = ("Arial", 12), command = adicionarJanela.destroy, bg = "#f65456")
     fecharDespesa.grid (row = 5, column = 0, sticky = "nsew", pady = 0)
 
 
@@ -60,8 +60,20 @@ def janelaExibe ():
     exibirJanela.columnconfigure (0, weight = 1)
     exibirJanela.rowconfigure (0, weight = 1)
 
-    descricaoLabel = Label (exibirJanela, text = "Aqui estão todas as suas despesas:", font = ("Arial", 12))
-    descricaoLabel.grid (row = 0, column = 0, sticky = "nsew", pady = 5)
+    terceiroContainer = Frame (exibirJanela)
+    terceiroContainer.grid (row = 0, column = 0, sticky = "nsew")
+
+    terceiroContainer.columnconfigure (0, weight = 1)
+    terceiroContainer.rowconfigure (0, weight = 1)
+
+    quartoContainer = Frame (exibirJanela, bg = "#ffffff")
+    quartoContainer.grid (row = 1, column = 0, sticky = "nsew", padx = 20, pady = 20)
+
+    quartoContainer.columnconfigure (0, weight = 1)
+    quartoContainer.rowconfigure (0, weight = 1)
+
+    descricaoLabel = Label (terceiroContainer, text = "Aqui estão todas as suas despesas:", font = ("Arial", 12, "bold"), bg = "#cee891")
+    descricaoLabel.grid (row = 0, column = 0, sticky = "nsew")
 
     if not despesas:
         messagebox.showinfo ("Erro", "Você ainda não armazenou nenhuma despesa.")
@@ -69,8 +81,8 @@ def janelaExibe ():
     
     for i, despesa in enumerate (despesas, start = 1):
         texto = f"{i}. {despesa['descricaoDespesa']} - R$ {despesa['valorDespesa']:.2f}"
-        exibeDespesas = Label(exibirJanela, text = texto)
-        exibeDespesas.grid (row = i, column = 0, sticky = "nsew", pady = 5)
+        exibeDespesas = Label(quartoContainer, text = texto, font = ("Arial", 12), bg = "#ffffff")
+        exibeDespesas.grid (row = i, column = 0, sticky = "w")
 
 # Soma todas as despesas e exibe o total gasto
 def total():
@@ -86,36 +98,36 @@ def total():
 janela = Tk()
 janela.title ("Controle de despesas")
 janela.geometry ("300x200")
+janela.configure (background = "#ffffff")
 
 janela.columnconfigure (0, weight = 1)
 janela.rowconfigure (0, weight = 1)
 
-primeiroContainer = Frame (janela)
-primeiroContainer.grid (row = 0, column = 0, sticky = "nsew", padx = 10, pady = 10)
+primeiroContainer = Frame (janela, bg = "#ffffff")
+primeiroContainer.grid (row = 0, column = 0, sticky = "nsew", padx = 20, pady = 20)
 
 primeiroContainer.columnconfigure (0, weight = 1)
 primeiroContainer.rowconfigure (0, weight = 1)
 
 segundoContainer = Frame (janela)
-segundoContainer.grid (row = 1, column = 0, sticky = "nsew", padx = 10)
+segundoContainer.grid (row = 1, column = 0, sticky = "nsew")
 
 segundoContainer.columnconfigure (0, weight = 1)
 segundoContainer.rowconfigure (0, weight = 1)
 
-
-welcomeLabel = Label (primeiroContainer, text = "SEJA BEM-VINDO(A)",  font = ("Arial", 12, "bold"))
+welcomeLabel = Label (primeiroContainer, text = "SEJA BEM-VINDO(A)",  font = ("Arial", 12, "bold"), bg = "#ffffff")
 welcomeLabel.grid (row = 0, column = 0, sticky = "nsew", pady = 5)
 
 acaoLabel = Label (segundoContainer, text = "O que você deseja fazer?", font = ("Arial", 12))
-acaoLabel.grid (row = 0, column = 0, sticky = "nsew", pady = 10)
+acaoLabel.grid (row = 0, column = 0, sticky = "nsew", pady = 5)
 
-adicionarDespesa = Button (janela, text = "Adicionar despesas", font = ("Arial", 12), command = janelaAdiciona)
+adicionarDespesa = Button (janela, text = "Adicionar despesas", font = ("Arial", 12), command = janelaAdiciona, bg = "#bada5f")
 adicionarDespesa.grid (row = 5, column = 0, sticky = "nsew", pady = 1)
 
-exibirDespesas = Button (janela, text = "Exibir despesas", font = ("Arial", 12), command = janelaExibe)
+exibirDespesas = Button (janela, text = "Exibir despesas", font = ("Arial", 12), command = janelaExibe, bg = "#bada5f")
 exibirDespesas.grid (row = 10, column = 0, sticky = "nsew", pady = 1)
 
-exibirTotal = Button (janela, text = "Exibir total gasto", font = ("Arial", 12), command = total)
+exibirTotal = Button (janela, text = "Exibir total gasto", font = ("Arial", 12), command = total, bg = "#bada5f")
 exibirTotal.grid (row = 15, column = 0, sticky = "nsew", pady = 1)
 
 janela.mainloop()
